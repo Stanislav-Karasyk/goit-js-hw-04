@@ -1,12 +1,30 @@
-const countProps = function (obj) {
-  const values = Object.values(obj);
+const inventory = {
+  items: ['Knife', 'Gas mask'],
+  add(itemName) {
+    console.log(`Adding ${itemName} to inventory`);
 
-  return values.length;
+    inventory.items.push(itemName);
+  },
+  remove(itemName) {
+    console.log(`Removing ${itemName} from inventory`);
+
+    inventory.items = inventory.items.filter(item => item !== itemName);
+  },
 };
 
-// для проверки
-console.log(countProps({})); // 0
+const invokeInventoryAction = function (itemName, action) {
+  console.log(`Invoking action on ${itemName}`);
+  action(itemName);
+};
 
-console.log(countProps({ name: 'Mango', age: 2 })); // 2
+invokeInventoryAction('Medkit', inventory.add);
+// Invoking action on Medkit
+// Adding Medkit to inventory
 
-console.log(countProps({ mail: 'poly@mail.com', isOnline: true, score: 500 })); // 3
+console.log(inventory.items); // ['Knife', 'Gas mask', 'Medkit']
+
+invokeInventoryAction('Gas mask', inventory.remove);
+// Invoking action on Gas mask
+// Removing Gas mask from inventory
+
+console.log(inventory.items); // ['Knife', 'Medkit']
